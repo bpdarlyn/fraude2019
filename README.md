@@ -64,7 +64,7 @@ COMPUTO_FOLDER=eleccion-hourly-oficial
 
   `rails fraude2019:sync_excels`
 
-- **Importar datos **
+- **Importar datos**
 
   ```bash
   # Abrir una terminal, este comando enciende rails y sidekiq, este comando en el root_directory del proyecto
