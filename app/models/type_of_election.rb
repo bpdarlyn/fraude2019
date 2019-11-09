@@ -1,0 +1,2 @@
+class TypeOfElection < ApplicationRecord
+end

@@ -1,0 +1,61 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  country: MyString
+  state_code: 1
+  state: MyString
+  province: MyString
+  municipality_code: 1
+  municipality: MyString
+  circumscription: MyString
+  location: MyString
+  precinct: MyString
+  polling_station_number: 1
+  polling_station_code: 1
+  type_of_vote: MyString
+  total_enrollments: 1
+  cc: MyString
+  fpv: MyString
+  mts: MyString
+  ucs: MyString
+  mas_ipsp: MyString
+  21f: MyString
+  pdc: MyString
+  mnr: MyString
+  pan_bol: MyString
+  valid_votes: 1
+  blank_votes: 1
+  null_votes: 1
+  state: MyString
+  provider: one
+  synce_excel: one
+
+two:
+  country: MyString
+  state_code: 1
+  state: MyString
+  province: MyString
+  municipality_code: 1
+  municipality: MyString
+  circumscription: MyString
+  location: MyString
+  precinct: MyString
+  polling_station_number: 1
+  polling_station_code: 1
+  type_of_vote: MyString
+  total_enrollments: 1
+  cc: MyString
+  fpv: MyString
+  mts: MyString
+  ucs: MyString
+  mas_ipsp: MyString
+  21f: MyString
+  pdc: MyString
+  mnr: MyString
+  pan_bol: MyString
+  valid_votes: 1
+  blank_votes: 1
+  null_votes: 1
+  state: MyString
+  provider: two
+  synce_excel: two

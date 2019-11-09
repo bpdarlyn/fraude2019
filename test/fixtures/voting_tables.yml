@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  precinct: one
+  table_number: MyString
+  table_code: MyString
+  type_of_election: one
+  total_enrollments: 1
+  valid_votes: 1
+  blank_votes: 1
+  null_votes: 1
+  act_state: MyString
+  catch_date: 2019-10-28 01:38:25
+  provider: one
+
+two:
+  precinct: two
+  table_number: MyString
+  table_code: MyString
+  type_of_election: two
+  total_enrollments: 1
+  valid_votes: 1
+  blank_votes: 1
+  null_votes: 1
+  act_state: MyString
+  catch_date: 2019-10-28 01:38:25
+  provider: two
