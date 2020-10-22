@@ -11,7 +11,6 @@ namespace :polls2020 do
     vote_importer.import_all 'country'
   end
 
-
   task import_states: :environment do
     vote_importer = VoteImporter.new
     vote_importer.import_all 'state'
@@ -21,7 +20,6 @@ namespace :polls2020 do
     vote_importer = VoteImporter.new
     vote_importer.import_all 'province'
   end
-
 
   task sync_excels: :environment do
     vote_importer = VoteImporter.new

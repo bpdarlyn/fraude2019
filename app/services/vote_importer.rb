@@ -24,7 +24,7 @@ class VoteImporter
 
 
   def import_all(type)
-    Provider.all.where(code: 2).each do |provider| # each only computo data
+    Provider.all.where(code: 1).each do |provider| # each only computo TSE
       provider.sync_excels.order(sync_at: :desc).each do |sync_excel|
         ImporterJob.perform_later(sync_excel, provider, type)
       end
