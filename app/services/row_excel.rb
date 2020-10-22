@@ -29,7 +29,6 @@ class RowExcel
   def build_denormalize
     new_attributes = columns.map { |k,v| [k, current_row[v]] }.to_h
     new_attributes = new_attributes.merge(provider_id: provider.id, sync_excel_id: sync_excel.id)
-    new_attributes[:table_code] = new_attributes[:table_code].to_i
     DenormalizeDatum.new new_attributes
   end
 

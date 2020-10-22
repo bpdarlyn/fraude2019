@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASS'] %>
-  host: localhost
+  host: 127.0.0.1
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
 development:
   <<: *default

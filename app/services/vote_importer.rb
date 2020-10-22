@@ -12,10 +12,15 @@ class VoteImporter
         base_name = File.basename(file)
         split_name_file = base_name.split('_')
         split_name_file = split_name_file.compact
-        split_name_file = split_name_file[1..-2]
-        section_date = split_name_file[0..2].join('-')
-        section_time = split_name_file[3..5].join(':')
-        catch_date = "#{section_date} #{section_time}"
+        section_date = split_name_file[2]
+        year = section_date[0..3]
+        month = section_date[4..2]
+        day = section_date[7..2]
+        section_time = split_name_file[3]
+        hour = section_time[0..2]
+        minute = section_time[2..2]
+        secs = section_time[4..2]
+        catch_date = "#{year}-#{month}-#{day} #{hour}:#{minute}:#{secs}"
         excels << {folder_name: base_name, provider: provider, sync_at: catch_date}
       end
       SyncExcel.create(excels)

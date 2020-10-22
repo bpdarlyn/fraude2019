@@ -23,7 +23,7 @@ class LoopExcel
         fpv: 'U',
         pan_bol: 'V',
         libre_21: 'W',
-        cc: 'x',
+        cc: 'X',
         juntos: 'Y',
         valid_votes: 'Z',
         blank_votes: 'AA',

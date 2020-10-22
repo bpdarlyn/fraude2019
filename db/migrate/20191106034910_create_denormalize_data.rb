@@ -1,8 +1,8 @@
 class CreateDenormalizeData < ActiveRecord::Migration[6.0]
   def change
     create_table :denormalize_data do |t|
-      t.string :table_code
-      t.integer :type_of_vote
+      t.integer :table_code
+      t.string :type_of_vote
       t.string :country
       t.string :state
       t.integer :circumscription
@@ -11,8 +11,8 @@ class CreateDenormalizeData < ActiveRecord::Migration[6.0]
       t.string :location
       t.string :precinct
       t.integer :table_number
-      t.string :total_enrollments
-      t.string :c
+      t.integer :total_enrollments
+      t.integer :c
       t.integer :adn
       t.integer :mas_ipsp
       t.integer :fpv
