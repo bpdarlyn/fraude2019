@@ -5,5 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Provider.create(code: 1, name: 'TRE')
-Provider.create(code: 2, name: 'COMPUTO')
+
+# votación 2019
+# Provider.create(code: 1, name: 'TRE')
+# Provider.create(code: 2, name: 'COMPUTO')
+
+# Votación 2020
+Provider.create(code: 1, name: 'TSE')

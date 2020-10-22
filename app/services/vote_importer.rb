@@ -10,7 +10,7 @@ class VoteImporter
       excels = []
       Dir["#{provider.path_file}/*"].each do |file|
         base_name = File.basename(file)
-        split_name_file = base_name.split('.')
+        split_name_file = base_name.split('_')
         split_name_file = split_name_file.compact
         split_name_file = split_name_file[1..-2]
         section_date = split_name_file[0..2].join('-')
