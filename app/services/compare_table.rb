@@ -32,11 +32,7 @@ class CompareTable
         pan_bol: 4,
         libre_21: 5,
         cc: 6,
-        juntos: 7,
-        valid_votes: 9,
-        blank_votes: 10,
-        null_votes: 11,
-        emit_votes: 12
+        juntos: 7
     }
   end
 
@@ -49,17 +45,26 @@ class CompareTable
     libre_21 = response_hash['datoAdicional']['tabla'][columns[:libre_21]]
     cc = response_hash['datoAdicional']['tabla'][columns[:cc]]
     juntos = response_hash['datoAdicional']['tabla'][columns[:juntos]]
-    cpem_b = response_hash['datoAdicional']['tabla'][8]
-    if cpem_b['nombre'] === 'CPEM-B'
-      valid_votes = response_hash['datoAdicional']['tabla'][columns[:valid_votes]]
-      blank_votes = response_hash['datoAdicional']['tabla'][columns[:blank_votes]]
-      null_votes = response_hash['datoAdicional']['tabla'][columns[:null_votes]]
-      emit_votes = response_hash['datoAdicional']['tabla'][columns[:emit_votes]]
-    else
-      valid_votes = response_hash['datoAdicional']['tabla'][columns[:valid_votes] - 1]
-      blank_votes = response_hash['datoAdicional']['tabla'][columns[:blank_votes] - 1]
-      null_votes = response_hash['datoAdicional']['tabla'][columns[:null_votes] - 1]
-      emit_votes = response_hash['datoAdicional']['tabla'][columns[:emit_votes] - 1]
+    table_length = response_hash['datoAdicional']['tabla'].length
+    i = 8
+    valid_votes = nil
+    blank_votes = nil
+    null_votes = nil
+    emit_votes = nil
+    while i < table_length
+      if response_hash['datoAdicional']['tabla'][i]['nombre'] === 'Votos Válidos'
+        valid_votes = response_hash['datoAdicional']['tabla'][i]
+      end
+      if response_hash['datoAdicional']['tabla'][i]['nombre'] === 'Votos Blancos'
+        blank_votes = response_hash['datoAdicional']['tabla'][i]
+      end
+      if response_hash['datoAdicional']['tabla'][i]['nombre'] === 'Votos Nulos'
+        null_votes = response_hash['datoAdicional']['tabla'][i]
+      end
+      if response_hash['datoAdicional']['tabla'][i]['nombre'] === 'Votos Emitidos'
+        emit_votes = response_hash['datoAdicional']['tabla'][i]
+      end
+      i += 1
     end
 
     new_attributes = {

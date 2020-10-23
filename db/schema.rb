@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_10_23_193005) do
     t.integer "emit_vote"
     t.integer "valid_system_vote"
     t.integer "emit_system_vote"
-    t.boolean "sync"
+    t.boolean "sync", default: false
     t.bigint "provider_id", null: false
     t.bigint "sync_excel_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -179,6 +179,8 @@ ActiveRecord::Schema.define(version: 2020_10_23_193005) do
     t.integer "blank_votes"
     t.integer "null_votes"
     t.integer "emit_votes"
+    t.string "obs"
+    t.string "attachment_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["denormalize_data_id", "sync_excel_id"], name: "index_table_votes_on_denormalize_data_id_and_sync_excel_id", unique: true
