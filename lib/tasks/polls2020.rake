@@ -26,4 +26,8 @@ namespace :polls2020 do
     vote_importer.sync_excels_with_provider
   end
 
+  task compare_by_table: :environment do
+    CompareTable.run
+  end
+
 end
