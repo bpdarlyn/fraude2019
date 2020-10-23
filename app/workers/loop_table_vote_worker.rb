@@ -8,7 +8,7 @@ class LoopTableVoteWorker
     block_denormalize_data = DenormalizeDatum.where(id: block_denormalize_data_ids)
     block_denormalize_data.each do |dd|
       ct = CompareTable.new(dd.table_code, dd)
-      sleep(2)
+      sleep(5)
       sync = ct.do_request
       dd.update(sync: sync)
     end

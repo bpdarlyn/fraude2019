@@ -15,6 +15,8 @@ class CreateTableVotes < ActiveRecord::Migration[6.0]
       t.integer :blank_votes
       t.integer :null_votes
       t.integer :emit_votes
+      t.string :obs
+      t.string :attachment_url
 
       t.timestamps
     end

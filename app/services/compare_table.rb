@@ -1,9 +1,11 @@
 class CompareTable
   attr_accessor :table_code, :denormalize_data
+
   def initialize(table_code, denormalize_data)
     @table_code = table_code
     @denormalize_data = denormalize_data
   end
+
   def self.run
     dds = SyncExcel.last.denormalize_data
     count_dds = dds.count
@@ -13,7 +15,7 @@ class CompareTable
     while i < divisor
       block_dd = dds.limit(step).offset(i * step)
       LoopTableVoteWorker.perform_async(block_dd.ids)
-      i+=1
+      i += 1
     end
   end
 
@@ -54,11 +56,12 @@ class CompareTable
       null_votes = response_hash['datoAdicional']['tabla'][columns[:null_votes]]
       emit_votes = response_hash['datoAdicional']['tabla'][columns[:emit_votes]]
     else
-      valid_votes = response_hash['datoAdicional']['tabla'][columns[:valid_votes] -1]
-      blank_votes = response_hash['datoAdicional']['tabla'][columns[:blank_votes] -1]
-      null_votes = response_hash['datoAdicional']['tabla'][columns[:null_votes] -1]
-      emit_votes = response_hash['datoAdicional']['tabla'][columns[:emit_votes] -1]
+      valid_votes = response_hash['datoAdicional']['tabla'][columns[:valid_votes] - 1]
+      blank_votes = response_hash['datoAdicional']['tabla'][columns[:blank_votes] - 1]
+      null_votes = response_hash['datoAdicional']['tabla'][columns[:null_votes] - 1]
+      emit_votes = response_hash['datoAdicional']['tabla'][columns[:emit_votes] - 1]
     end
+
     new_attributes = {
         c: c['valor1'],
         adn: adn['valor1'],
@@ -73,14 +76,19 @@ class CompareTable
         null_votes: null_votes['valor1'],
         emit_votes: emit_votes['valor1'],
         denormalize_data: denormalize_data,
-        sync_excel_id: denormalize_data.sync_excel_id
+        sync_excel_id: denormalize_data.sync_excel_id,
+        obs: response_hash['datoAdicional']['observacion']
     }
+    if response_hash['datoAdicional']['adjunto'] && response_hash['datoAdicional']['adjunto'][0] &&
+        response_hash['datoAdicional']['adjunto'][0]['tipo'] === 'ACTA'
+      new_attributes[:attachment_url] = response_hash['datoAdicional']['adjunto'][0]['valor']
+    end
     TableVote.create!(new_attributes)
   end
 
   def do_request
     begin
-      response = RestClient.post(url_trep, {codigoMesa: table_code}.to_json, headers={content_type: :json})
+      response = RestClient.post(url_trep, {codigoMesa: table_code}.to_json, headers = {content_type: :json})
       hash_body = JSON.parse(response.body)
       process_response(hash_body)
       true
