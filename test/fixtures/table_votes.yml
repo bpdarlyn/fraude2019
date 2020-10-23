@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  denormalize_data: one
+  c: 1
+  adn: 1
+  mas_ipsp: 1
+  fpv: 1
+  pan_bol: 1
+  libre_21: 1
+  cc: 1
+  juntos: 1
+  valid_votes: 1
+  blank_votes: 1
+  null_votes: 1
+  emit_votes: 1
+
+two:
+  denormalize_data: two
+  c: 1
+  adn: 1
+  mas_ipsp: 1
+  fpv: 1
+  pan_bol: 1
+  libre_21: 1
+  cc: 1
+  juntos: 1
+  valid_votes: 1
+  blank_votes: 1
+  null_votes: 1
+  emit_votes: 1

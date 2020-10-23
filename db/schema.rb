@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_06_034910) do
+ActiveRecord::Schema.define(version: 2020_10_23_193005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2019_11_06_034910) do
     t.integer "emit_vote"
     t.integer "valid_system_vote"
     t.integer "emit_system_vote"
+    t.boolean "sync"
     t.bigint "provider_id", null: false
     t.bigint "sync_excel_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -163,6 +164,28 @@ ActiveRecord::Schema.define(version: 2019_11_06_034910) do
     t.index ["provider_id"], name: "index_sync_excels_on_provider_id"
   end
 
+  create_table "table_votes", force: :cascade do |t|
+    t.bigint "denormalize_data_id", null: false
+    t.bigint "sync_excel_id", null: false
+    t.integer "c"
+    t.integer "adn"
+    t.integer "mas_ipsp"
+    t.integer "fpv"
+    t.integer "pan_bol"
+    t.integer "libre_21"
+    t.integer "cc"
+    t.integer "juntos"
+    t.integer "valid_votes"
+    t.integer "blank_votes"
+    t.integer "null_votes"
+    t.integer "emit_votes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["denormalize_data_id", "sync_excel_id"], name: "index_table_votes_on_denormalize_data_id_and_sync_excel_id", unique: true
+    t.index ["denormalize_data_id"], name: "index_table_votes_on_denormalize_data_id"
+    t.index ["sync_excel_id"], name: "index_table_votes_on_sync_excel_id"
+  end
+
   create_table "type_of_elections", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -228,6 +251,8 @@ ActiveRecord::Schema.define(version: 2019_11_06_034910) do
   add_foreign_key "states", "providers"
   add_foreign_key "states", "sync_excels"
   add_foreign_key "sync_excels", "providers"
+  add_foreign_key "table_votes", "denormalize_data", column: "denormalize_data_id"
+  add_foreign_key "table_votes", "sync_excels"
   add_foreign_key "votes", "politic_parties"
   add_foreign_key "votes", "providers"
   add_foreign_key "votes", "sync_excels"

@@ -26,6 +26,7 @@ class CreateDenormalizeData < ActiveRecord::Migration[6.0]
       t.integer :emit_vote
       t.integer :valid_system_vote
       t.integer :emit_system_vote
+      t.boolean :sync
       t.references :provider, null: false, foreign_key: true
       t.references :sync_excel, null: false, foreign_key: true
 

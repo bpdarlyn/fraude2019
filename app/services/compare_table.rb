@@ -1,12 +1,13 @@
 class CompareTable
-  attr_accessor :table_code
-  def initialize(table_code)
+  attr_accessor :table_code, :denormalize_data
+  def initialize(table_code, denormalize_data)
     @table_code = table_code
+    @denormalize_data = denormalize_data
   end
   def self.run
     dds = SyncExcel.last.denormalize_data
     count_dds = dds.count
-    divisor = 4
+    divisor = 15
     step = count_dds / divisor
     i = 0
     while i < divisor
@@ -58,6 +59,23 @@ class CompareTable
       null_votes = response_hash['datoAdicional']['tabla'][columns[:null_votes] -1]
       emit_votes = response_hash['datoAdicional']['tabla'][columns[:emit_votes] -1]
     end
+    new_attributes = {
+        c: c['valor1'],
+        adn: adn['valor1'],
+        mas_ipsp: mas_ipsp['valor1'],
+        fpv: fpv['valor1'],
+        pan_bol: pan_bol['valor1'],
+        libre_21: libre_21['valor1'],
+        cc: cc['valor1'],
+        juntos: juntos['valor1'],
+        valid_votes: valid_votes['valor1'],
+        blank_votes: blank_votes['valor1'],
+        null_votes: null_votes['valor1'],
+        emit_votes: emit_votes['valor1'],
+        denormalize_data: denormalize_data,
+        sync_excel_id: denormalize_data.sync_excel_id
+    }
+    TableVote.create!(new_attributes)
   end
 
   def do_request
@@ -65,14 +83,10 @@ class CompareTable
       response = RestClient.post(url_trep, {codigoMesa: table_code}.to_json, headers={content_type: :json})
       hash_body = JSON.parse(response.body)
       process_response(hash_body)
-    rescue RestClient::Unauthorized, RestClient::Forbidden => err
-      puts 'Access denied'
-      return err.response
-    rescue RestClient::ImATeapot => err
-      puts 'The server is a teapot! # RFC 2324'
-      return err.response
-    rescue
-      puts 'Some exception was not controlled'
+      true
+    rescue StandardError => e
+      puts "Rescued: #{e.message}"
+      false
     end
   end
 end
