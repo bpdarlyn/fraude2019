@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 2020_10_23_193005) do
     t.integer "emit_votes"
     t.string "obs"
     t.string "attachment_url"
+    t.integer "table_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["denormalize_data_id", "sync_excel_id"], name: "index_table_votes_on_denormalize_data_id_and_sync_excel_id", unique: true

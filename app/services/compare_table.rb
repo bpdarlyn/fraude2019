@@ -7,15 +7,18 @@ class CompareTable
   end
 
   def self.run
-    dds = SyncExcel.last.denormalize_data
-    count_dds = dds.count
-    divisor = 15
-    step = count_dds / divisor
-    i = 0
-    while i < divisor
-      block_dd = dds.limit(step).offset(i * step)
-      LoopTableVoteWorker.perform_async(block_dd.ids)
-      i += 1
+    sync_excels = SyncExcel.all
+    sync_excels.each do |sync_excel|
+      dds = sync_excel.denormalize_data.left_outer_joins(:table_vote).where('table_votes.denormalize_data_id is null')
+      count_dds = dds.count
+      divisor = 100
+      step = count_dds / divisor
+      i = 0
+      while i < divisor
+        block_dd = dds.limit(step).offset(i * step)
+        LoopTableVoteWorker.perform_async(block_dd.ids)
+        i += 1
+      end
     end
   end
 
@@ -82,13 +85,14 @@ class CompareTable
         emit_votes: emit_votes['valor1'],
         denormalize_data: denormalize_data,
         sync_excel_id: denormalize_data.sync_excel_id,
-        obs: response_hash['datoAdicional']['observacion']
+        obs: response_hash['datoAdicional']['observacion'],
+        table_code: table_code
     }
     if response_hash['datoAdicional']['adjunto'] && response_hash['datoAdicional']['adjunto'][0] &&
         response_hash['datoAdicional']['adjunto'][0]['tipo'] === 'ACTA'
       new_attributes[:attachment_url] = response_hash['datoAdicional']['adjunto'][0]['valor']
     end
-    TableVote.create!(new_attributes)
+    TableVote.new(new_attributes)
   end
 
   def do_request
@@ -96,9 +100,8 @@ class CompareTable
       response = RestClient.post(url_trep, {codigoMesa: table_code}.to_json, headers = {content_type: :json})
       hash_body = JSON.parse(response.body)
       process_response(hash_body)
-      true
     rescue StandardError => e
-      puts "Rescued: #{e.message}"
+      puts "Rescued: #{e.message} #{table_code}"
       false
     end
   end
